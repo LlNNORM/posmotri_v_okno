@@ -100,35 +100,30 @@ ol {
   color: var(--co-white);
 }
 
-.search-form + .search-form__fieldset-title {
-  border-bottom: 1px solid var(--co-white);
-}
-
 .search-form__label {
   display: flex;
   cursor: pointer;
   user-select: none;
 }
 
+.search-form__label-text:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 .search-form__textfield {
   font-family: inherit; 
   color: inherit;
   font-size: inherit;
+   /* так как автоматически не наследует родительские стили */
   width: 226px;
   padding: 3px 14px 3px 0;
   background-color: transparent;
   border: none;
+  border-top: 1px solid var(--co-white);
   border-bottom: 1px solid var(--co-white);
   appearance: none;
 }
-
-.search-form__textfield:focus {
- border:none;
-}
-
-.search-form__textfield:focus {
-  border:1px solid var(--co-white);
- }
 
 .search-form__checkbox-list {
   margin-top: 5px;
@@ -154,7 +149,9 @@ ol {
   margin: auto;
 }
 
-
+.search-form__label:focus {
+  outline: 1px solid var(--co-white);
+}
 
 .content__details {
   display: flex;
@@ -177,12 +174,13 @@ ol {
   color: var(--co-gray);
 }
 
-
+.content__list-item {
+  margin-bottom: 30px;
+}
 .content__list {
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 30px;
   overflow: hidden auto;
   height: 298px;
   width: 100%;
@@ -195,6 +193,15 @@ ol {
 
 .content__video-card {
   display: flex;
+  &:hover{
+    text-decoration: underline;
+    text-underline-offset: 5px;
+  }
+  &:active {
+    background-color: var(--co-gray);
+    text-decoration: none;
+  }
+
 }
 .content__video-card-description-container{
   flex-grow: 1;
@@ -205,6 +212,7 @@ ol {
   font-size: 18px;
   line-height: 90%;
   color: var(--co-white);
+  
 }
 
 .content__video-card-title {
@@ -224,7 +232,9 @@ ol {
 }
 
 .button {
+  position: relative;
   font-family: 'Fira Sans Condensed', sans-serif;
+  /* так как не наследует глобальные стили */
   border: 1px solid var(--co-white);
   background-color: transparent;
   cursor: pointer;
@@ -233,6 +243,28 @@ ol {
   text-align: center;
   color: var(--co-white);
   user-select: none;
+  transition: all 0.3s ease-in-out;
+  text-decoration-color: transparent; 
+  /* необходимо для работы свойства transition c text-decoration: underline; */
+
+  &:focus-visible {
+    outline: 1px solid var(--co-white);
+    outline-offset: 1px;
+  }
+
+  @media(hover:hover) {
+    &:hover {
+      text-decoration: underline;
+      
+      text-underline-offset: 3px;
+      /* text-decoration-skip-ink:none; */
+    }
+  } 
+  /* таким медиа-запросом отключаем hover-эффекты для мобильных утройств */
+  &:active {
+    background-color: var(--co-gray);
+    text-decoration: none;
+  }
 }
 
 .search-form__submit-button {
