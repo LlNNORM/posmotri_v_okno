@@ -105,31 +105,18 @@ ol {
   cursor: pointer;
   align-items: center;
   text-decoration-color: transparent; 
-  /* если задавать нижнее почеркивание через border-bottom, то также необходимо задавать цвет  border-bottom-color: transparent, во-первых, для того,чтобы не было лэйаут шифта при появлении границы ,во-вторых,для того, чтобы чтобы срабатывало свойство transition. Также подчеркивание можно задать через box-shadow, анимация для него задается подобным образом, но это сложнее и сам цвет немного приглушается. */
   user-select: none;
-  /* must have, не позволяет выделять текст элемента,что может случайно произойти при клике */
   transition: text-decoration 0.3s ease-in-out;
   &:has(:focus-visible) {
     outline: 1px solid var(--co-white);
     outline-offset: 1px;
   }
-  /* &:has(.search-form__checkbox:focus-visible) {
-    outline: 1px solid var(--co-white);
-    outline-offset: 1px;
-  } */
-
-  /* &:focus-within {
-    outline: 1px solid var(--co-white);
-    outline-offset: 1px;
-  }  */
-   /* Поддержка выше,чем у has, накладывает эффект фокуса на родителя,если он сработал на дочерних элементах, но нельзя вычленить только focus-visible  */
 }
 
 .search-form__textfield {
   font-family: inherit; 
   color: inherit;
   font-size: inherit;
-   /* так как автоматически не наследует родительские стили */
   width: 226px;
   padding: 3px 14px 3px 0;
   background-color: transparent;
@@ -137,7 +124,6 @@ ol {
   border-top: 1px solid var(--co-white);
   border-bottom: 1px solid var(--co-white);
   appearance: none;
-  /* так в разных браузерах будут нужные нам стили, сброс дефолтных стилей */
   &:focus {
     outline: none;
   }
@@ -147,7 +133,7 @@ ol {
   margin-top: 5px;
   display: flex;
   gap: 15px;
- 
+  
   @media(hover:hover) {
     &>.search-form__label:hover {
       text-decoration: underline;
@@ -165,8 +151,6 @@ ol {
 }
 
 .search-form__label:has(.search-form__checkbox:checked) .search-form__pseudo-checkbox:before {
-  /* либо через соседство .search-form__checkbox:checked + .search-form__pseudo-checkbox:before
-  или же родство .search-form__checkbox:checked ~ .search-form__pseudo-checkbox:before*/
   content: "";
   width: 15px;
   height: 15px;
@@ -214,16 +198,13 @@ ol {
     opacity: 0;
     pointer-events: none;
   }
-  /* Убираем скроллбар */
 }
 
 .content__card-link {
   display: block;
-  /* иначе focus не применяется к элементу */
   width: 100%;
   margin: 2px;
   padding: 2px;
-  /* чтобы outline для focus-visible был виден полностью */
   text-decoration: none;
   color:var(--co-white);
   text-decoration-color: transparent; 
@@ -235,11 +216,12 @@ ol {
     outline: 1px solid var(--co-white);
     outline-offset: 1px;
   }
-  &:hover{
-    text-decoration: underline;
-    text-underline-offset: 6px;
-    overflow: hidden;
-  }
+  @media(hover:hover) {
+    &>.search-form__label:hover {
+      text-decoration: underline;
+      text-underline-offset: 6px;
+      }
+    } 
   &:active {
     background-color: var(--co-gray);
     text-decoration: none;
@@ -247,8 +229,6 @@ ol {
 }
 
 .content__card-link_current {
-  display: block;
-  /* иначе не сможем задать цвет фона */
   background-color: var(--co-gray);
   text-decoration: none;
 }
@@ -273,7 +253,6 @@ ol {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  /* Стандартная конструкция для удержания заголовка в одной строке в случае переполнения */
 }
 
 .content__video-card-description {
@@ -281,14 +260,6 @@ ol {
   font-size: 18px;
   line-height: 90%;
   color: var(--co-white);
-  hyphens: auto;
-  /* автоматическая постановка дефисов и перенос слов, если они слишком длинные. Также можно использовать word-break:break-all или break-word, визуально хуже,но поддержка у него выше*/
-  
-  /* overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  ограничение количества строк в блоке при переполнении, ограниченная поддержка */
 }
 
 
@@ -301,18 +272,15 @@ ol {
 .button {
   position: relative;
   font-family: 'Fira Sans Condensed', sans-serif;
-  /* так как не наследует глобальные стили */
   border: 1px solid var(--co-white);
   background-color: transparent;
   cursor: pointer;
   font-weight: 700;
   font-size: 18px;
-  text-align: center;
   color: var(--co-white);
   user-select: none;
   transition: all 0.3s ease-in-out;
   text-decoration-color: transparent; 
-  /* необходимо для работы свойства transition c text-decoration: underline; */
   &:focus {
     outline:none;
   }
@@ -325,10 +293,8 @@ ol {
     &:hover {
       text-decoration: underline;
       text-underline-offset: 3px;
-      /* text-decoration-skip-ink:none; */
     }
   } 
-  /* таким медиа-запросом отключаем hover-эффекты для мобильных утройств */
   &:active {
     background-color: var(--co-gray);
     text-decoration: none;
