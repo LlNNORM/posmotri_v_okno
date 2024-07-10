@@ -67,6 +67,7 @@ ol {
 
 .result {
   display: flex;
+  width: 62.37%;
   flex-direction: column;
   gap: 16px;
 }
@@ -86,7 +87,6 @@ ol {
 .search-form {
   display: flex;
   justify-content: space-between;
-  align-items: end;
 }
 
 .search-form__fieldset {
@@ -103,12 +103,26 @@ ol {
 .search-form__label {
   display: flex;
   cursor: pointer;
+  align-items: center;
+  text-decoration-color: transparent; 
+  /* если задавать нижнее почеркивание через border-bottom, то также необходимо задавать цвет  border-bottom-color: transparent, во-первых, для того,чтобы не было лэйаут шифта при появлении границы ,во-вторых,для того, чтобы чтобы срабатывало свойство transition. Также подчеркивание можно задать через box-shadow, анимация для него задается подобным образом, но это сложнее и сам цвет немного приглушается. */
   user-select: none;
-}
+  /* must have, не позволяет выделять текст элемента,что может случайно произойти при клике */
+  transition: text-decoration 0.3s ease-in-out;
+  &:has(:focus-visible) {
+    outline: 1px solid var(--co-white);
+    outline-offset: 1px;
+  }
+  /* &:has(.search-form__checkbox:focus-visible) {
+    outline: 1px solid var(--co-white);
+    outline-offset: 1px;
+  } */
 
-.search-form__label-text:hover {
-  text-decoration: underline;
-  text-underline-offset: 3px;
+  /* &:focus-within {
+    outline: 1px solid var(--co-white);
+    outline-offset: 1px;
+  }  */
+   /* Поддержка выше,чем у has, накладывает эффект фокуса на родителя,если он сработал на дочерних элементах, но нельзя вычленить только focus-visible  */
 }
 
 .search-form__textfield {
@@ -123,12 +137,23 @@ ol {
   border-top: 1px solid var(--co-white);
   border-bottom: 1px solid var(--co-white);
   appearance: none;
+  /* так в разных браузерах будут нужные нам стили, сброс дефолтных стилей */
+  &:focus {
+    outline: none;
+  }
 }
 
 .search-form__checkbox-list {
   margin-top: 5px;
   display: flex;
   gap: 15px;
+ 
+  @media(hover:hover) {
+    &>.search-form__label:hover {
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      }
+    } 
 }
 
 .search-form__pseudo-checkbox {
@@ -149,16 +174,13 @@ ol {
   margin: auto;
 }
 
-.search-form__label:focus {
-  outline: 1px solid var(--co-white);
-}
-
 .content__details {
+  height: 100%;
+  max-width: 35%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  gap: 20px;
   flex-grow: 1;
-  height: 100%;
 }
 
 .title {
@@ -174,9 +196,10 @@ ol {
   color: var(--co-gray);
 }
 
-.content__list-item {
+.content__list-item:not(:last-of-type){
   margin-bottom: 30px;
 }
+
 .content__list {
   position: relative;
   display: flex;
@@ -184,51 +207,96 @@ ol {
   overflow: hidden auto;
   height: 298px;
   width: 100%;
+
+  &::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    opacity: 0;
+    pointer-events: none;
+  }
+  /* Убираем скроллбар */
 }
 
 .content__card-link {
+  display: block;
+  /* иначе focus не применяется к элементу */
+  width: 100%;
+  margin: 2px;
+  padding: 2px;
+  /* чтобы outline для focus-visible был виден полностью */
   text-decoration: none;
   color:var(--co-white);
-}
-
-.content__video-card {
-  display: flex;
+  text-decoration-color: transparent; 
+  transition: text-decoration 0.3s ease-in-out;
+  &:focus {
+    outline: none;
+  }
+  &:focus-visible {
+    outline: 1px solid var(--co-white);
+    outline-offset: 1px;
+  }
   &:hover{
     text-decoration: underline;
-    text-underline-offset: 5px;
+    text-underline-offset: 6px;
+    overflow: hidden;
   }
   &:active {
     background-color: var(--co-gray);
     text-decoration: none;
   }
-
 }
+
+.content__card-link_current {
+  display: block;
+  /* иначе не сможем задать цвет фона */
+  background-color: var(--co-gray);
+  text-decoration: none;
+}
+
+.content__video-card {
+  display: flex;
+  width: 100%;
+}
+
 .content__video-card-description-container{
+  max-width: 50%;
   flex-grow: 1;
 }
 
-.content__video-card-description {
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 90%;
-  color: var(--co-white);
-  
-}
-
 .content__video-card-title {
-  margin-bottom: 6px;
   font-family: Oswald;
   font-weight: 700;
   font-size: 30px;
   line-height: 100%;
   text-transform: uppercase;
   color: var(--co-white);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  /* Стандартная конструкция для удержания заголовка в одной строке в случае переполнения */
 }
+
+.content__video-card-description {
+  margin-top: 6px;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 90%;
+  color: var(--co-white);
+  hyphens: auto;
+  /* автоматическая постановка дефисов и перенос слов, если они слишком длинные. Также можно использовать word-break:break-all или break-word, визуально хуже,но поддержка у него выше*/
+  
+  /* overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  ограничение количества строк в блоке при переполнении, ограниченная поддержка */
+}
+
 
 .content__video-card-thumbnail {
   width: 194px;
   height: 103px;
-  object-fit: contain;
+  object-fit: cover;
 }
 
 .button {
@@ -246,7 +314,9 @@ ol {
   transition: all 0.3s ease-in-out;
   text-decoration-color: transparent; 
   /* необходимо для работы свойства transition c text-decoration: underline; */
-
+  &:focus {
+    outline:none;
+  }
   &:focus-visible {
     outline: 1px solid var(--co-white);
     outline-offset: 1px;
@@ -255,7 +325,6 @@ ol {
   @media(hover:hover) {
     &:hover {
       text-decoration: underline;
-      
       text-underline-offset: 3px;
       /* text-decoration-skip-ink:none; */
     }
@@ -269,6 +338,7 @@ ol {
 
 .search-form__submit-button {
   padding: 5px 73px;
+  align-self: end;
 }
 
 .more-button {
