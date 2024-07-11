@@ -1,4 +1,4 @@
-# posmotri_v_okno LANDING
+# POSMOTRI_V_OKNO LANDING
 
-### MY FIRST PROJECT AT YANDEX PRACTICUM:
-### https://github.com/LlNNORM/ono-tebe-nado
+### MY SECOND PROJECT AT YANDEX PRACTICUM:
+### https://github.com/LlNNORM/posmotri_v_okno
