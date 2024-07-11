@@ -191,13 +191,13 @@ ol {
   overflow: hidden auto;
   height: 298px;
   width: 100%;
-
+/* 
   &::-webkit-scrollbar {
     display: none;
     width: 0;
     opacity: 0;
     pointer-events: none;
-  }
+  } */
 }
 
 .content__card-link {
@@ -217,7 +217,7 @@ ol {
     outline-offset: 1px;
   }
   @media (hover: hover) {
-    & > .search-form__label:hover {
+    &:hover {
       text-decoration: underline;
       text-underline-offset: 6px;
     }
